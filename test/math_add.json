@@ -2,7 +2,7 @@
 	"block",
 	{
 		"name": "plugin",
-		"path": "./lib/base_lambda.so"
+		"path": "./lib/std.so"
 	},
 	[
 		"+",

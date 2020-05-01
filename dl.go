@@ -5,8 +5,6 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"plugin"
-
-	"github.com/duan-map-lisp/types/symbol_map_node"
 )
 
 type Dl struct {
