@@ -1,0 +1,14 @@
+[
+	"block",
+	{
+		"name": "plugin",
+		"path": "./lib/base_lambda.so"
+	},
+	[
+		"+",
+		6,
+		3,
+		1,
+		7.7
+	]
+]
