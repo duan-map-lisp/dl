@@ -4,6 +4,7 @@
 
 # 中国需要代理访问，非中国用户可以注释这里
 export GOPROXY=https://goproxy.cn
+SHELL:=/bin/bash
 
 # 可执行程序
 cmd := dl
@@ -20,8 +21,9 @@ generate:
 	do \
 		echo "./bin/generate $$FileName"; \
 		./bin/generate $$FileName; \
-		go fmt; \
 	done
+	go fmt >& /dev/null; \
+	true;
 
 build:
 	for CmdName in $(cmd); \
@@ -31,7 +33,6 @@ build:
 	done
 
 test:
-	go test
 	for FileName in `find ./test -name '*.json'`; \
 	do \
 		echo "./bin/dl $$FileName"; \
@@ -42,6 +43,8 @@ clean:
 	rm -rfdv ./bin/*
 
 dist_clean: clean
+	rm -rfdv ./lib/*
+	rm -rfdv `find -name '*_generate_drop.go'`
 
 .PHONY: \
 	all \

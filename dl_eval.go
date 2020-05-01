@@ -1,14 +1,14 @@
 package dl
 
 import (
-	// "fmt"
-	// "encoding/json"
+// "fmt"
+// "encoding/json"
 )
 
-func (self *Dl) Eval () (resI interface{}) {
+func (self *Dl) Eval() (resI interface{}) {
 	// self.PrecompilingRegexp ()
-	self.Precompiling ()
-	resI = self.Run ()
+	self.Precompiling()
+	resI = self.Run()
 
 	return
 }

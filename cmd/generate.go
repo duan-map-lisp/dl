@@ -17,17 +17,18 @@ func main () {
 		"MkSlice": MkSlice,
 		"MkMap": MkMap,
 		"CoverSnakeCaseToPascalCase": CoverSnakeCaseToPascalCase,
+		"GetFormat": GetFormat,
 	}).ParseFiles (os.Args[1])
 	if err != nil {
 		panic (err)
 	}
 
-	if ok, err := regexp.MatchString ("([.])_generate_test.go", os.Args[1]); err != nil || !ok {
-		return
+	if ok, err := regexp.MatchString ("^.*_generate_test.go$", os.Args[1]); err != nil || !ok {
+		panic (err)
 	}
 
 	var outFile *os.File
-	if outFile, err = os.OpenFile(os.Args[1][:len (os.Args[1]) - 17] + ".go", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644); err != nil {
+	if outFile, err = os.OpenFile(os.Args[1][:len (os.Args[1]) - 17] + "_generate_drop.go", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644); err != nil {
 		panic (err)
 	}
 
@@ -60,6 +61,18 @@ func CoverSnakeCaseToPascalCase (inStr string) (outStr string) {
 		tmpOneByte := []byte(tmpOne)
 		tmpOneByte[0] = strings.ToUpper (string (tmpOneByte[0]))[0]
 		outStr += string (tmpOneByte)
+	}
+
+	return
+}
+
+func GetFormat (inStr string, format string) (outStr string) {
+	if ("single" == format) {
+		outStr = inStr
+	} else if ("slice" == format) {
+		outStr = "[]" + inStr
+	} else if ("map" == format) {
+		outStr = "map[string]" + inStr
 	}
 
 	return

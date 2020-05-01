@@ -29,6 +29,7 @@ func main () {
 		AllStr: []byte (`{"name": "eval", "data": {"name": "import", "filename": "` + filename + `"}}`),
 		SubNodeTree: map[string]*dl.Dl {},
 		Lambdas: map[string]func (*dl.Dl) (interface{}) {},
+		Symbols: map[string]interface{} {},
 	}
 	(&test).Init ()
 	res := (&test).Eval ()
