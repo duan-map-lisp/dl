@@ -9,10 +9,10 @@ SHELL:=/bin/bash
 # 可执行程序
 cmd := dl
 
-all:
+auto:
 	make clean
 	make generate
-	make build
+	make all
 	make test
 
 generate:
@@ -25,7 +25,7 @@ generate:
 	go fmt >& /dev/null; \
 	true;
 
-build:
+all:
 	for CmdName in $(cmd); \
 	do \
 		echo "go build -o ./bin/$$CmdName ./cmd/$$CmdName.go"; \
@@ -47,6 +47,7 @@ dist_clean: clean
 	rm -rfdv `find -name '*_generate_drop.go'`
 
 .PHONY: \
+	auto \
 	all \
 	test \
 	clean \

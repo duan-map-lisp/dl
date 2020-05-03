@@ -1,7 +1,12 @@
 {
-	"name": "hehedadadada",
-	"fjewio": "jfioewjio",
-	"_fjeiow_jfewiojio": "jfeiowjio",
-	"_"  : "jfieojwio",
-	"223": 3345
+	"name": "defvar",
+	"symbol": "test_map",
+	"type": "object",
+	"value": {
+		"name": "hehedadadada",
+		"fjewio": "jfioewjio",
+		"_fjeiow_jfewiojio": "jfeiowjio",
+		"_"  : "jfieojwio",
+		"223": 3345
+	}
 }

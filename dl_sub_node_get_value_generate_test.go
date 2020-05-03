@@ -6,7 +6,8 @@ import (
 )
 
 {{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string"}}
-{{$format_types := MkSlice "single" "slice" "map"}}
+{{/* $format_types := MkSlice "single" "slice" "map" */}}
+{{$format_types := MkSlice "single"}}
 {{range $_, $type_base := $all_types}}
 {{range $_, $format_one := $format_types}}
 {{$type_one := GetFormat $type_base $format_one}}
@@ -16,7 +17,7 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 	if value, err = self.SubNodeCheckKey (key); err != nil {
 		return
 	}
-	resI := value.Run ()
+	resI := value.Call ()
 	if resI == nil {
 		panic ("get value is nil")
 	}
@@ -40,7 +41,7 @@ func (self *Dl) SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverS
 	}
 
 	value := self.SubNodeList[index]
-	if resI := value.Run (); resI == nil {
+	if resI := value.Call (); resI == nil {
 		panic ("get value is nil")
 	}
 	var tmpRes {{$type_one}}
@@ -53,3 +54,19 @@ func (self *Dl) SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverS
 
 {{end}}
 {{end}}
+
+func (self *Dl) SubNodeGet (key string) (res *Dl, err error) {
+	if res, err = self.SubNodeCheckKey (key); err != nil {
+		return
+	}
+	return
+}
+
+func (self *Dl) SubNodeListGet (index int) (res *Dl, err error) {
+	if len(self.SubNodeList) <= index {
+		panic ("index out range")
+	}
+
+	res = self.SubNodeList[index]
+	return
+}

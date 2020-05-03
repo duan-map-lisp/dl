@@ -6,7 +6,7 @@ import (
 )
 
 func (self *Dl) setImport() {
-	self.Lambdas["import"] = func(self *Dl) (resI interface{}) {
+	Lambdas["import"] = func(self *Dl) (resI interface{}) {
 		self.CheckLambdasName("import")
 		var err error
 		var filename string

@@ -1,7 +1,7 @@
 package dl
 
 import (
-	"fmt"
+	log "github.com/sirupsen/logrus"
 
 	"encoding/json"
 )
@@ -15,14 +15,12 @@ func (self *Dl) Precompiling() {
 		}
 		for tmpNum, tmpOne := range self.TmpList {
 			data := Dl{
-				NodeIndex:   tmpNum,
-				FatherNode:  self,
-				AllStr:      tmpOne,
-				SubNodeTree: map[string]*Dl{},
-				Lambdas:     map[string]func(*Dl) interface{}{},
-				Symbols:     map[string]interface{}{},
+				NodeIndex:  tmpNum,
+				FatherNode: self,
+				AllStr:     tmpOne,
 			}
-			fmt.Println("in Precompiling ", data.NodeName, self.SubNodeTree)
+			(&data).Init()
+			log.Debug("in Precompiling ", data.NodeName, self.SubNodeTree)
 			self.SubNodeList = append(self.SubNodeList, &data)
 			(&data).Precompiling()
 		}
@@ -32,24 +30,22 @@ func (self *Dl) Precompiling() {
 
 	// 如果是map
 	if err = json.Unmarshal(self.AllStr, &self.TmpMap); err == nil {
-		fmt.Println("get map", self.TmpMap)
+		log.Debug("get map", self.TmpMap)
 		if len(self.TmpMap) < 1 {
 			return
 		}
 		for tmpKey, tmpOne := range self.TmpMap {
-			fmt.Println("tmpKey:", tmpKey)
-			fmt.Println("tmpOne", string(tmpOne))
+			log.Debug("tmpKey:", tmpKey)
+			log.Debug("tmpOne", string(tmpOne))
 			data := Dl{
-				NodeName:    tmpKey,
-				FatherNode:  self,
-				AllStr:      tmpOne,
-				SubNodeTree: map[string]*Dl{},
-				Lambdas:     map[string]func(*Dl) interface{}{},
-				Symbols:     map[string]interface{}{},
+				NodeName:   tmpKey,
+				FatherNode: self,
+				AllStr:     tmpOne,
 			}
+			(&data).Init()
 			self.SubNodeTree[tmpKey] = &data
 			(&data).Precompiling()
-			fmt.Println(self.SubNodeTree)
+			log.Debug(self.SubNodeTree)
 		}
 		return
 	}

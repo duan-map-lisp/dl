@@ -1,0 +1,28 @@
+[
+	"block",
+	{
+		"name": "defvar",
+		"symbol": "test_path",
+		"type": "string",
+		"value": "./test/int.json"
+	},
+	{
+		"name": "call",
+		"args": {
+			"filename": "test_path"
+		},
+		"lambda": {
+			"name": "lambda",
+			"args": [
+				"filename"
+			],
+			"body": {
+				"name": "import",
+				"filename": {
+					"name": "getvar",
+					"symbol": "filename"
+				}
+			}
+		}
+	}
+]

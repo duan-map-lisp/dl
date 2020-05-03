@@ -55,6 +55,10 @@ func MkMap (args ...interface{}) map[string]interface{} {
 }
 
 func CoverSnakeCaseToPascalCase (inStr string) (outStr string) {
+	/*
+	re := regexp.MustCompile ("{}")
+	inStr = re.ReplaceAllLiteralString (inStr, "")
+	*/
 	tmpArray := strings.Split (inStr, "_")
 	outStr = ""
 	for _, tmpOne := range tmpArray {

@@ -5,7 +5,7 @@ import (
 )
 
 func (self *Dl) setPlugin() {
-	self.Lambdas["plugin"] = func(self *Dl) (resI interface{}) {
+	Lambdas["plugin"] = func(self *Dl) (resI interface{}) {
 		self.CheckLambdasName("plugin")
 		var err error
 		var path string

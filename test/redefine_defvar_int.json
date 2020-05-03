@@ -1,0 +1,15 @@
+[
+	"block",
+	{
+		"name": "defvar",
+		"symbol": "heheda",
+		"type": "int",
+		"value": 9
+	},
+	{
+		"name": "defvar",
+		"symbol": "heheda",
+		"type": "int",
+		"value": 9
+	}
+]

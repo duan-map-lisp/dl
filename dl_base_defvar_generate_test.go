@@ -1,11 +1,11 @@
 package dl
 
 import (
-	"fmt"
+	log "github.com/sirupsen/logrus"
 )
 
 func (self *Dl) setDefvar() {
-	self.Lambdas["defvar"] = func(self *Dl) (resI interface{}) {
+	Lambdas["defvar"] = func(self *Dl) (resI interface{}) {
 		self.CheckLambdasName("defvar")
 		if self.FatherNode == nil {
 			panic("defvar不可能是root节点")
@@ -23,23 +23,58 @@ func (self *Dl) setDefvar() {
 		switch symbol_type {
 
 			{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string"}}
-			{{$format_types := MkSlice "single" "slice" "map"}}
+			{{/* $format_types := MkSlice "single" "slice" "map" */}}
+			{{$format_types := MkSlice "single"}}
 			{{range $_, $type_base := $all_types}}
 			{{range $_, $format_one := $format_types}}
 			{{$type_one := GetFormat $type_base $format_one}}
 
 		case "{{$type_one}}":
+			if _, ok := self.FatherNode.Symbols[symbol]; ok {
+				panic ("redefine val " + symbol)
+			}
 			if self.FatherNode.Symbols[symbol], err = self.SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnakeCaseToPascalCase $type_base}} ("value"); err != nil {
 				panic (err)
 			}
 
 			{{end}}
 			{{end}}
+		case "lambda":
+			if _, ok := self.FatherNode.Symbols[symbol]; ok {
+				panic ("redefine val " + symbol)
+			}
+			if self.FatherNode.Symbols[symbol], err = self.SubNodeGetSingleString ("value"); err != nil {
+				panic (err)
+			}
+		case "array":
+			if _, ok := self.FatherNode.Symbols[symbol]; ok {
+				panic ("redefine val " + symbol)
+			}
+			var tmpNode *Dl
+			if tmpNode, err = self.SubNodeGet ("value"); err != nil {
+				panic (err)
+			}
+			if len (tmpNode.TmpMap) != 0 {
+				panic ("value not array type")
+			}
+			self.FatherNode.Symbols[symbol] = tmpNode
+		case "object":
+			if _, ok := self.FatherNode.Symbols[symbol]; ok {
+				panic ("redefine val " + symbol)
+			}
+			var tmpNode *Dl
+			if tmpNode, err = self.SubNodeGet ("value"); err != nil {
+				panic (err)
+			}
+			if len (tmpNode.TmpList) != 0 {
+				panic ("value not object type")
+			}
+			self.FatherNode.Symbols[symbol] = tmpNode
 
 		default:
 			panic ("error var type" + symbol_type)
 		}
-		fmt.Println ("self.FatherNode.Symbols", self.FatherNode.Symbols)
+		log.Debug ("self.FatherNode.Symbols", self.FatherNode.Symbols)
 		return
 	}
 	return

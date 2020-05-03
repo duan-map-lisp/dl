@@ -1,9 +1,28 @@
 package dl
 
 import (
-	"fmt"
-	// "encoding/json"
+	log "github.com/sirupsen/logrus"
 )
+
+func (self *Dl) Call() (resI interface{}) {
+	log.Debug("in Call ", self.TmpInterface)
+	if self.TmpInterface != nil {
+		resI = self.TmpInterface
+		return
+	}
+
+	if len(self.TmpList) != 0 {
+		resI = self.LambdaList()
+		return
+	}
+
+	if len(self.TmpMap) != 0 {
+		resI = self.LambdaMap()
+		return
+	}
+
+	return
+}
 
 func (self *Dl) LambdaMap() (res interface{}) {
 	var err error
@@ -15,20 +34,6 @@ func (self *Dl) LambdaMap() (res interface{}) {
 
 	lambdaOne := self.GetLambda(lambdaName)
 	res = lambdaOne(self)
-	return
-}
-
-func (self *Dl) GetLambda(lambdaName string) (res func(*Dl) interface{}) {
-	fmt.Println("in get lambda", self.NodeName, self.Lambdas)
-	res, ok := self.Lambdas[lambdaName]
-	if !ok {
-		if self.FatherNode == nil {
-			panic("未定义的函数：" + lambdaName)
-		} else {
-			res = self.FatherNode.GetLambda(lambdaName)
-		}
-	}
-
 	return
 }
 

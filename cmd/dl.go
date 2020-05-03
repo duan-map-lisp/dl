@@ -24,14 +24,17 @@ func main () {
 	fmt.Println ("dl filename: ", filename)
 
 
-	test := dl.Dl {
+	test := &dl.Dl {
 		NodeName: "root",
 		AllStr: []byte (`{"name": "eval", "data": {"name": "import", "filename": "` + filename + `"}}`),
-		SubNodeTree: map[string]*dl.Dl {},
-		Lambdas: map[string]func (*dl.Dl) (interface{}) {},
-		Symbols: map[string]interface{} {},
 	}
-	(&test).Init ()
-	res := (&test).Eval ()
+	test.Init ()
+	test.SetBaseFunc ()
+	test.Precompiling ()
+	evalFunc, ok := dl.Lambdas["eval"]
+	if !ok {
+		panic ("eval not found")
+	}
+	res := evalFunc (test)
 	fmt.Println ("结果：", res)
 }

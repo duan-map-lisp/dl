@@ -1,0 +1,43 @@
+[
+	"block",
+	{
+		"name": "defvar",
+		"symbol": "test_path",
+		"type": "string",
+		"value": "./test/int.json"
+	},
+	{
+		"name": "defvar",
+		"symbol": "test_func",
+		"type": "lambda",
+		"value": {
+			"name": "lambda",
+			"args": [
+				"heheda"
+			],
+			"body": [
+				"block",
+				{
+					"name": "eval",
+					"data": {
+						"name": "import",
+						"filename": {
+							"name": "getvar",
+							"symbol": "heheda"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"name": "call",
+		"args": {
+			"heheda": "test_path"
+		},
+		"lambda": {
+			"name": "getvar",
+			"symbol": "test_func"
+		}
+	}
+]
