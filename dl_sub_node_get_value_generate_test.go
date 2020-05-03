@@ -1,11 +1,12 @@
 package dl
 
 import (
+	"errors"
 	"strconv"
 	"encoding/json"
 )
 
-{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string"}}
+{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string" "bool"}}
 {{/* $format_types := MkSlice "single" "slice" "map" */}}
 {{$format_types := MkSlice "single"}}
 {{range $_, $type_base := $all_types}}
@@ -19,7 +20,8 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 	}
 	resI := value.Call ()
 	if resI == nil {
-		panic ("get value is nil")
+		err = errors.New ("get value is nil")
+		return
 	}
 	switch resTmp := resI.(type) {
 	case {{$type_one}}:
@@ -29,7 +31,8 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 
 	var tmpRes {{$type_one}}
 	if err = json.Unmarshal(value.AllStr, &tmpRes); err != nil {
-		panic (key + " type not {{$type_one}}: " + err.Error ())
+		err = errors.New (key + " type not {{$type_one}}: " + err.Error ())
+		return
 	}
 	res = tmpRes
 	return
@@ -37,16 +40,19 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 
 func (self *Dl) SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnakeCaseToPascalCase $type_base}} (index int) (res {{$type_one}}, err error) {
 	if len(self.SubNodeList) <= index {
-		panic ("index out range")
+		err = errors.New ("index out range")
+		return
 	}
 
 	value := self.SubNodeList[index]
 	if resI := value.Call (); resI == nil {
-		panic ("get value is nil")
+		err = errors.New ("get value is nil")
+		return
 	}
 	var tmpRes {{$type_one}}
 	if err = json.Unmarshal(value.AllStr, &tmpRes); err != nil {
-		panic (strconv.Itoa (index) + " type not {{$type_one}}: " + err.Error ())
+		err = errors.New (strconv.Itoa (index) + " type not {{$type_one}}: " + err.Error ())
+		return
 	}
 	res = tmpRes
 	return
@@ -64,7 +70,8 @@ func (self *Dl) SubNodeGet (key string) (res *Dl, err error) {
 
 func (self *Dl) SubNodeListGet (index int) (res *Dl, err error) {
 	if len(self.SubNodeList) <= index {
-		panic ("index out range")
+		err = errors.New ("index out range")
+		return
 	}
 
 	res = self.SubNodeList[index]

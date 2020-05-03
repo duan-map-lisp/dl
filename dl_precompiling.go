@@ -14,15 +14,15 @@ func (self *Dl) Precompiling() {
 			return
 		}
 		for tmpNum, tmpOne := range self.TmpList {
-			data := Dl{
+			data := &Dl{
 				NodeIndex:  tmpNum,
 				FatherNode: self,
 				AllStr:     tmpOne,
 			}
-			(&data).Init()
+			data.Init()
 			log.Debug("in Precompiling ", data.NodeName, self.SubNodeTree)
-			self.SubNodeList = append(self.SubNodeList, &data)
-			(&data).Precompiling()
+			self.SubNodeList = append(self.SubNodeList, data)
+			data.Precompiling()
 		}
 
 		return
@@ -37,14 +37,14 @@ func (self *Dl) Precompiling() {
 		for tmpKey, tmpOne := range self.TmpMap {
 			log.Debug("tmpKey:", tmpKey)
 			log.Debug("tmpOne", string(tmpOne))
-			data := Dl{
+			data := &Dl{
 				NodeName:   tmpKey,
 				FatherNode: self,
 				AllStr:     tmpOne,
 			}
-			(&data).Init()
-			self.SubNodeTree[tmpKey] = &data
-			(&data).Precompiling()
+			data.Init()
+			self.SubNodeTree[tmpKey] = data
+			data.Precompiling()
 			log.Debug(self.SubNodeTree)
 		}
 		return

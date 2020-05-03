@@ -1,0 +1,27 @@
+[
+	"block",
+	12345,
+	"begin",
+	{
+		"name": "macro",
+		"symbol": "yoo",
+		"body": {
+			"name": "quote",
+			"data": {
+				"name": "eval",
+				"data": {
+					"name": "import",
+					"filename": "./test/int.json"
+				}
+			}
+		}
+	},
+	"middle",
+	{
+		"name": "exmacro",
+		"lambda": {
+			"name": "get",
+			"symbol": "yoo"
+		}
+	}
+]

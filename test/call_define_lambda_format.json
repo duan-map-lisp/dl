@@ -1,13 +1,13 @@
 [
 	"block",
 	{
-		"name": "defvar",
+		"name": "let",
 		"symbol": "test_path",
 		"type": "string",
 		"value": "./test/int.json"
 	},
 	{
-		"name": "defvar",
+		"name": "let",
 		"symbol": "test_func",
 		"type": "lambda",
 		"value": {
@@ -22,7 +22,7 @@
 					"data": {
 						"name": "import",
 						"filename": {
-							"name": "getvar",
+							"name": "get",
 							"symbol": "heheda"
 						}
 					}
@@ -36,7 +36,7 @@
 			"heheda": "test_path"
 		},
 		"lambda": {
-			"name": "getvar",
+			"name": "get",
 			"symbol": "test_func"
 		}
 	}

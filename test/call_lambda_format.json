@@ -1,7 +1,7 @@
 [
 	"block",
 	{
-		"name": "defvar",
+		"name": "let",
 		"symbol": "test_path",
 		"type": "string",
 		"value": "./test/int.json"
@@ -19,7 +19,7 @@
 			"body": {
 				"name": "import",
 				"filename": {
-					"name": "getvar",
+					"name": "get",
 					"symbol": "filename"
 				}
 			}

@@ -6,7 +6,7 @@ import (
 
 func (self *Dl) setPlugin() {
 	Lambdas["plugin"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("plugin")
+		self.CheckLambdasNameForce("plugin")
 		var err error
 		var path string
 		if path, err = self.SubNodeGetSingleString("path"); err != nil {

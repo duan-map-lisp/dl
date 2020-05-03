@@ -10,41 +10,16 @@ func (self *Dl) Call() (resI interface{}) {
 		resI = self.TmpInterface
 		return
 	}
-
-	if len(self.TmpList) != 0 {
-		resI = self.LambdaList()
-		return
-	}
-
-	if len(self.TmpMap) != 0 {
-		resI = self.LambdaMap()
-		return
-	}
-
-	return
-}
-
-func (self *Dl) LambdaMap() (res interface{}) {
 	var err error
 	var lambdaName string
-	lambdaName, err = self.SubNodeGetSingleString("name")
-	if err != nil {
-		panic(err)
-	}
-
-	lambdaOne := self.GetLambda(lambdaName)
-	res = lambdaOne(self)
-	return
-}
-
-func (self *Dl) LambdaList() (res interface{}) {
-	var err error
-	var lambdaName string
-	lambdaName, err = self.SubNodeListGetSingleString(0)
-	if err != nil {
-		panic(err)
+	if lambdaName, err = self.SubNodeGetSingleString("name"); err != nil {
+		if lambdaName, err = self.SubNodeListGetSingleString(0); err != nil {
+			resI = nil
+			return
+		}
 	}
 	lambdaOne := self.GetLambda(lambdaName)
-	res = lambdaOne(self)
+	resI = lambdaOne(self)
+
 	return
 }

@@ -13,7 +13,6 @@ auto:
 	make clean
 	make generate
 	make all
-	make test
 
 generate:
 	go build -o bin/generate cmd/generate.go

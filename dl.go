@@ -6,13 +6,12 @@ import (
 )
 
 var Lambdas map[string]func(*Dl) interface{}
-var Macros map[string]func(*Dl) interface{}
-var RegexpMacros map[string]func(*Dl) interface{}
+var RegexpMacros map[string]string
+var GenerateFlag bool
 
 func init() {
 	Lambdas = map[string]func(*Dl) interface{}{}
-	Macros = map[string]func(*Dl) interface{}{}
-	RegexpMacros = map[string]func(*Dl) interface{}{}
+	RegexpMacros = map[string]string{}
 	log.SetLevel(log.DebugLevel)
 	// log.SetLevel(log.InfoLevel)
 }
@@ -50,16 +49,29 @@ func (self *Dl) SetBaseFunc() {
 	self.setImport()
 	// eval解释执行[]byte格式的代码
 	self.setEval()
+	// load加载[]byte格式的代码按照object返回
+	self.setLoad()
 	// 加载一个第三方中间件插件
 	self.setPlugin()
 	// 顺序执行代码，返回最后一行的执行结果，如果遇到break为true时中断并返回执行结果
 	self.setBlock()
 	// 定义一个变量
-	self.setDefvar()
+	self.setLet()
 	// 获取一个变量的值
-	self.setGetvar()
+	self.setGet()
 	// 执行一个定义过的lambda
 	self.setCall()
 	// 注册一个lambda函数
 	self.setLambda()
+
+	// 注册一个macro函数
+	self.setMacro()
+	// 展开一个定义过的macro
+	self.setExmacro()
+	// 正则宏保护函数
+	self.setSafe()
+
+	// 标准lisp操作函数
+	self.setQuote()
+	self.setAtom()
 }

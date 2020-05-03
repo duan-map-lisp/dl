@@ -2,9 +2,10 @@ package dl
 
 import (
 	"encoding/json"
+	// log "github.com/sirupsen/logrus"
 )
 
-func getSliceByte(dataNode *Dl) (data []byte) {
+func GetSliceByte(dataNode *Dl) (data []byte) {
 	var err error
 	resNodeI := dataNode.Call()
 	if resNodeI == nil {
@@ -26,21 +27,40 @@ func getSliceByte(dataNode *Dl) (data []byte) {
 }
 
 func (self *Dl) setEval() {
+	// eval一定执行期，一定是顶层，宏不能继承给下一级eval
 	Lambdas["eval"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("eval")
+		self.CheckLambdasNameForce("eval")
 		var err error
 		var dataNode *Dl
 		if dataNode, err = self.SubNodeGet("data"); err != nil {
 			panic("'data' not found")
 		}
-		data := getSliceByte(dataNode)
+		data := GetSliceByte(dataNode)
 
 		evalSubNode := &Dl{
 			FatherNode: self,
 			AllStr:     data,
 		}
 		evalSubNode.Init()
+
+		// 读取解析所有字符串解析成算法树
 		evalSubNode.Precompiling()
+		GenerateFlag = true
+		for {
+			// 如果宏被处理过，再处理一次
+			if !GenerateFlag {
+				// 如果宏已经不再被处理，预处理期结束
+				break
+			}
+			GenerateFlag = false
+			// 处理宏
+			evalSubNode.Generate()
+			// 处理正则展开宏
+			evalSubNode.GenerateRegexp()
+		}
+		// 进入执行其前把预处理期垃圾回收一下
+		evalSubNode.CleanGenerate()
+
 		resI = evalSubNode.Call()
 
 		return

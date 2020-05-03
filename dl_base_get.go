@@ -1,8 +1,8 @@
 package dl
 
-func (self *Dl) setGetvar() {
-	Lambdas["getvar"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("getvar")
+func (self *Dl) setGet() {
+	Lambdas["get"] = func(self *Dl) (resI interface{}) {
+		self.CheckLambdasNameForce("get")
 		var err error
 		var symbol string
 		if symbol, err = self.SubNodeGetSingleString("symbol"); err != nil {

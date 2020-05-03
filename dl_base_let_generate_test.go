@@ -4,11 +4,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func (self *Dl) setDefvar() {
-	Lambdas["defvar"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("defvar")
+func (self *Dl) setLet() {
+	Lambdas["let"] = func(self *Dl) (resI interface{}) {
+		self.CheckLambdasNameForce("let")
 		if self.FatherNode == nil {
-			panic("defvar不可能是root节点")
+			panic("let不可能是root节点")
 		}
 
 		var err error

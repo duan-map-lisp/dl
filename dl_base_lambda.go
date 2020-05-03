@@ -8,7 +8,7 @@ import (
 
 func (self *Dl) setLambda() {
 	Lambdas["lambda"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("lambda")
+		self.CheckLambdasNameForce("lambda")
 		var err error
 		var body *Dl
 		if body, err = self.SubNodeGet("body"); err != nil {

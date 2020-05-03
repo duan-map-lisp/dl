@@ -7,7 +7,7 @@ import (
 
 func (self *Dl) setImport() {
 	Lambdas["import"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasName("import")
+		self.CheckLambdasNameForce("import")
 		var err error
 		var filename string
 		if filename, err = self.SubNodeGetSingleString("filename"); err != nil {

@@ -1,0 +1,31 @@
+[
+	"block",
+	12345,
+	"begin",
+	{
+		"name": "macro",
+		"symbol": "yoo",
+		"body": [
+			"block",
+			{
+				"name": "let",
+				"symbol": "ex_reargs_macro",
+				"type": "object",
+				"value": {
+					"name": "get",
+					"symbol": "reargs"
+				}
+			},
+			{
+				"name": "get",
+				"symbol": "ex_reargs_macro"
+			}
+		]
+	},
+	"middle",
+	{
+		"regexp": "^[,](*)[,]$",
+		"macro": "yoo"
+	},
+	"+,1,2,3,4,5"
+]

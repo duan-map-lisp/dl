@@ -7,7 +7,7 @@ import (
 func (self *Dl) setCall() {
 	Lambdas["call"] = func(self *Dl) (resI interface{}) {
 		log.Debug("in Call", self.TmpInterface)
-		self.CheckLambdasName("call")
+		self.CheckLambdasNameForce("call")
 		var err error
 		var lambda string
 		if lambda, err = self.SubNodeGetSingleString("lambda"); err != nil {
@@ -19,7 +19,8 @@ func (self *Dl) setCall() {
 		}
 		lambdaArgsDl.Init()
 		if args, err = self.SubNodeGet("args"); err != nil {
-			panic("'lambda' not found")
+			args = nil
+			err = nil
 		}
 		if args != nil {
 			log.Debug(args.SubNodeTree)
