@@ -1,0 +1,27 @@
+[
+	"block",
+	{
+		"name": "cdr",
+		"data": ["quote", [1, 2, 3, 4]]
+	},
+	[
+		"cdr",
+		["quote", [1, 2, 3, 4]]
+	],
+	{
+		"name": "cdr",
+		"data": ["quote", {
+			"hehe": 123,
+			"you": "ujoif",
+			"haha": 1235
+		}],
+		"key": "hehe"
+	},
+	[
+		"cdr", ["quote", {
+			"hehe": 123,
+			"you": "ujoif",
+			"haha": 1235
+		}], "hehe"
+	]
+]

@@ -13,16 +13,28 @@ func (self *Dl) setLet() {
 
 		var err error
 		var symbol string
-		if symbol, err = self.SubNodeGetSingleString("symbol"); err != nil {
-			panic("'symbol' not found")
-		}
 		var symbol_type string
-		if symbol_type, err = self.SubNodeGetSingleString("type"); err != nil {
-			panic("'type' not found")
+		if len(self.SubNodeTree) >= 3 {
+			if symbol, err = self.SubNodeGetSingleString("symbol"); err != nil {
+				panic("'symbol' not found")
+			}
+			if symbol_type, err = self.SubNodeGetSingleString("type"); err != nil {
+				panic("'type' not found")
+			}
+		} else if len(self.SubNodeList) == 3 {
+			if symbol, err = self.SubNodeListGetSingleString(1); err != nil {
+				panic("'symbol' not found")
+			}
+			if symbol_type, err = self.SubNodeListGetSingleString(2); err != nil {
+				panic("'type' not found")
+			}
+		} else {
+			panic("'let' format error")
 		}
+
 		switch symbol_type {
 
-			{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string"}}
+			{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "float32" "float64" "int" "uint" "rune" "byte" "uintptr" "string"}}
 			{{/* $format_types := MkSlice "single" "slice" "map" */}}
 			{{$format_types := MkSlice "single"}}
 			{{range $_, $type_base := $all_types}}
@@ -46,7 +58,7 @@ func (self *Dl) setLet() {
 			if self.FatherNode.Symbols[symbol], err = self.SubNodeGetSingleString ("value"); err != nil {
 				panic (err)
 			}
-		case "array":
+		case "list":
 			if _, ok := self.FatherNode.Symbols[symbol]; ok {
 				panic ("redefine val " + symbol)
 			}
@@ -55,7 +67,7 @@ func (self *Dl) setLet() {
 				panic (err)
 			}
 			if len (tmpNode.TmpMap) != 0 {
-				panic ("value not array type")
+				panic ("value not list type")
 			}
 			self.FatherNode.Symbols[symbol] = tmpNode
 		case "object":
@@ -72,9 +84,9 @@ func (self *Dl) setLet() {
 			self.FatherNode.Symbols[symbol] = tmpNode
 
 		default:
-			panic ("error var type" + symbol_type)
+			panic ("error var type " + symbol_type)
 		}
-		log.Debug ("self.FatherNode.Symbols", self.FatherNode.Symbols)
+		log.Debug ("self.FatherNode.Symbols ", self.FatherNode.Symbols)
 		return
 	}
 	return

@@ -7,29 +7,20 @@
 			"name": "load",
 			"data": {
 				"name": "import",
-				"filename": "./test/defvar_int.json"
+				"filepath": "./test/defvar_int.json"
 			}
 		}
 	},
 	"middle",
 	{
-		"name": "call",
+		"name": "exmacro",
 		"lambda": {
-			"name": "lambda",
-			"body": [
-				"block",
-				{
-					"name": "exmacro",
-					"lambda": {
-						"name": "get",
-						"symbol": "yoo"
-					}
-				},
-				{
-					"name": "get",
-					"symbol": "heheda"
-				}
-			]
+			"name": "get",
+			"symbol": "yoo"
 		}
+	},
+	{
+		"name": "get",
+		"symbol": "heheda"
 	}
 ]

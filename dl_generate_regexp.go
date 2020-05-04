@@ -3,7 +3,33 @@ package dl
 import (
 	"encoding/json"
 	"regexp"
+
+	log "github.com/sirupsen/logrus"
 )
+
+func (self *Dl) CheckRegexpMacroRange(regexpStr string, macroName string) (ok bool) {
+	var macroNameRes interface{}
+	macroNameRes, ok = self.Symbols[regexpStr]
+	if !ok {
+		if self.FatherNode == nil {
+			ok = false
+			return
+		} else {
+			ok = self.CheckRegexpMacroRange(regexpStr, macroName)
+		}
+	}
+	switch macroNameTmp := macroNameRes.(type) {
+	case string:
+		if macroNameTmp == macroName {
+			ok = true
+		} else {
+			ok = false
+		}
+	default:
+		ok = false
+	}
+	return
+}
 
 func (self *Dl) GenerateRegexp() {
 	var err error
@@ -27,8 +53,14 @@ func (self *Dl) GenerateRegexp() {
 		}
 
 		for regexpStr, macroName := range RegexpMacros {
+			if ok := self.CheckRegexpMacroRange(regexpStr, macroName); !ok {
+				log.Debug("不再作用域内")
+				continue
+			}
+
 			re := regexp.MustCompile(regexpStr)
 			subStrsArray := re.FindAllStringSubmatch(tmpRes, -1)
+			log.Debug("正则获取 ", subStrsArray)
 			if len(subStrsArray) == 0 {
 				continue
 			}
@@ -59,8 +91,14 @@ func (self *Dl) GenerateRegexp() {
 		}
 
 		for regexpStr, macroName := range RegexpMacros {
+			if ok := self.CheckRegexpMacroRange(regexpStr, macroName); !ok {
+				log.Debug("不再作用域内")
+				continue
+			}
+
 			re := regexp.MustCompile(regexpStr)
 			subStrsArray := re.FindAllStringSubmatch(tmpRes, -1)
+			log.Debug("正则获取 ", subStrsArray)
 			if len(subStrsArray) == 0 {
 				continue
 			}

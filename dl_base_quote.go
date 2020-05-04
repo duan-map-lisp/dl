@@ -20,30 +20,23 @@ func (self *Dl) setQuote() {
 		var err error
 		var data *Dl
 
-		if len(self.SubNodeTree) != 0 {
+		if len(self.SubNodeTree) >= 2 {
 			if data, err = self.SubNodeGet("data"); err != nil {
-				panic(err)
+				panic("'data' not found")
 			}
-			if checkQuote(data) {
-				resI = data.Call()
-			} else {
-				resI = data
-			}
-			return
-		}
-
-		if len(self.SubNodeList) == 2 {
+		} else if len(self.SubNodeList) == 2 {
 			if data, err = self.SubNodeListGet(1); err != nil {
-				panic(err)
+				panic("'data' not found")
 			}
-			if checkQuote(data) {
-				resI = data.Call()
-			} else {
-				resI = data
-			}
-			return
+		} else {
+			panic("quote format error")
 		}
 
-		panic("quote format error")
+		if checkQuote(data) {
+			resI = data.Call()
+		} else {
+			resI = data
+		}
+		return
 	}
 }

@@ -2,7 +2,7 @@
 	"block",
 	{
 		"name": "plugin",
-		"path": "./lib/std.so"
+		"filepath": "./lib/std.so"
 	},
 	[
 		"+",

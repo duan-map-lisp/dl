@@ -12,8 +12,8 @@ var GenerateFlag bool
 func init() {
 	Lambdas = map[string]func(*Dl) interface{}{}
 	RegexpMacros = map[string]string{}
-	log.SetLevel(log.DebugLevel)
-	// log.SetLevel(log.InfoLevel)
+	// log.SetLevel(log.DebugLevel)
+	log.SetLevel(log.InfoLevel)
 }
 
 type Dl struct {
@@ -31,14 +31,14 @@ type Dl struct {
 	TmpInterface interface{}
 
 	Symbols map[string]interface{}
-
-	BlockBreakFlag bool
 }
 
 func (self *Dl) Init() {
 	// 加载包含文件字符串
 	self.SubNodeTree = map[string]*Dl{}
 	self.SubNodeList = []*Dl{}
+	self.SubNodeTmp = nil
+	self.TmpInterface = nil
 	self.Symbols = map[string]interface{}{}
 
 	return
@@ -66,6 +66,8 @@ func (self *Dl) SetBaseFunc() {
 
 	// 注册一个macro函数
 	self.setMacro()
+	// 注册一个正则macro函数
+	self.setRemacro()
 	// 展开一个定义过的macro
 	self.setExmacro()
 	// 正则宏保护函数
@@ -73,5 +75,9 @@ func (self *Dl) SetBaseFunc() {
 
 	// 标准lisp操作函数
 	self.setQuote()
-	self.setAtom()
+	self.setType()
+	self.setEq()
+	self.setCar()
+	self.setCdr()
+	self.setCons()
 }

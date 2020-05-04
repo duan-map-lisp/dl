@@ -12,12 +12,19 @@ func (self *Dl) Call() (resI interface{}) {
 	}
 	var err error
 	var lambdaName string
-	if lambdaName, err = self.SubNodeGetSingleString("name"); err != nil {
-		if lambdaName, err = self.SubNodeListGetSingleString(0); err != nil {
-			resI = nil
-			return
+	if len(self.SubNodeTree) >= 1 {
+		if lambdaName, err = self.SubNodeGetSingleString("name"); err != nil {
+			panic("'name' not found " + err.Error())
 		}
+	} else if len(self.SubNodeList) >= 1 {
+		if lambdaName, err = self.SubNodeListGetSingleString(0); err != nil {
+			panic("'name' not found " + err.Error())
+		}
+	} else {
+		resI = nil
+		return
 	}
+
 	lambdaOne := self.GetLambda(lambdaName)
 	resI = lambdaOne(self)
 

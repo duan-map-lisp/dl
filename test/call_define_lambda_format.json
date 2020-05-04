@@ -21,7 +21,7 @@
 					"name": "eval",
 					"data": {
 						"name": "import",
-						"filename": {
+						"filepath": {
 							"name": "get",
 							"symbol": "heheda"
 						}

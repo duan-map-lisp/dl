@@ -9,7 +9,7 @@
 	{
 		"name": "lambda",
 		"args": {
-			"filename": "heheda"
+			"filepath": "heheda"
 		},
 		"body": {
 			"name": "import"

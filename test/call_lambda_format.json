@@ -9,18 +9,18 @@
 	{
 		"name": "call",
 		"args": {
-			"filename": "test_path"
+			"filepath": "test_path"
 		},
 		"lambda": {
 			"name": "lambda",
 			"args": [
-				"filename"
+				"filepath"
 			],
 			"body": {
 				"name": "import",
-				"filename": {
+				"filepath": {
 					"name": "get",
-					"symbol": "filename"
+					"symbol": "filepath"
 				}
 			}
 		}

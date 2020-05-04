@@ -1,15 +1,16 @@
 [
 	"block",
 	null,
-	["atom", 123],
-	["atom", null],
-	["atom", ["quote", "hehe"]],
-	["atom", ["quote", {
+	["type", 123],
+	["type", null],
+	["type", ["quote", "hehe"]],
+	["type", ["quote", {
 		"you": "heheda"
 	}]],
-	["atom", {"name": "quote", "data": ["123", 123, "fjioew"]}],
+	["type", {"name": "quote", "data": ["123", 123, "fjioew"]}],
 	{
-		"name": "atom",
+		"name": "type",
 		"data": 123
-	}
+	},
+	["quote", "123"]
 ]

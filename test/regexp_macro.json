@@ -1,31 +1,25 @@
 [
 	"block",
 	12345,
+	null,
 	"begin",
 	{
 		"name": "macro",
 		"symbol": "yoo",
 		"body": [
-			"block",
-			{
-				"name": "let",
-				"symbol": "ex_reargs_macro",
-				"type": "object",
-				"value": {
-					"name": "get",
-					"symbol": "reargs"
-				}
-			},
+			"quote",
 			{
 				"name": "get",
-				"symbol": "ex_reargs_macro"
+				"symbol": "reargs"
 			}
 		]
 	},
 	"middle",
 	{
-		"regexp": "^[,](*)[,]$",
+		"name": "remacro",
+		"regexp": "^:(.*)$",
 		"macro": "yoo"
 	},
-	"+,1,2,3,4,5"
+	"+,1,2,3,4,5",
+	":heheda"
 ]

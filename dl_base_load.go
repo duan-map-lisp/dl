@@ -5,37 +5,33 @@ import (
 )
 
 func (self *Dl) setLoad() {
-	// load一定是预处理期
+	// load一定是预处理期，否则返回的就是加载文件的数据正文，object或者list了
 	Lambdas["load"] = func(self *Dl) (resI interface{}) {
 		self.CheckLambdasNameForce("load")
 		var err error
 		var dataNode *Dl
-		if dataNode, err = self.SubNodeGet("data"); err != nil {
-			panic("'data' not found")
+		if len(self.SubNodeTree) >= 2 {
+			if dataNode, err = self.SubNodeGet("data"); err != nil {
+				panic("'data' not found")
+			}
+		} else if len(self.SubNodeList) == 2 {
+			if dataNode, err = self.SubNodeListGet(1); err != nil {
+				panic("'data' not found")
+			}
+		} else {
+			panic("'load' format error")
 		}
 		data := GetSliceByte(dataNode)
 
-		if len(self.FatherNode.SubNodeTree) != 0 {
-			loadSubNode := &Dl{
-				FatherNode: self,
-				AllStr:     data,
-			}
-			loadSubNode.Init()
-
-			// 读取解析所有字符串解析成算法树
-			loadSubNode.Precompiling()
-			resI = loadSubNode
-		} else if len(self.FatherNode.SubNodeList) != 0 {
-			loadSubNode := &Dl{
-				FatherNode: self,
-				AllStr:     data,
-			}
-			loadSubNode.Init()
-
-			// 读取解析所有字符串解析成算法树
-			loadSubNode.Precompiling()
-			resI = loadSubNode
+		loadSubNode := &Dl{
+			FatherNode: self,
+			AllStr:     data,
 		}
+		loadSubNode.Init()
+
+		// 读取解析所有字符串解析成算法树
+		loadSubNode.Precompiling()
+		resI = loadSubNode
 
 		return
 	}

@@ -39,15 +39,12 @@ func (self *Dl) setExmacro() {
 				newNode.Init()
 				self.FatherNode.SubNodeTree[self.NodeName] = newNode
 			}
-		}
-		if len(self.FatherNode.SubNodeList) != 0 {
+		} else if len(self.FatherNode.SubNodeList) != 0 {
 			log.Debug("self.NodeIndex ", self.NodeIndex)
 			switch resTmp := exRes.(type) {
 			case *Dl:
 				resTmp.FatherNode = self.FatherNode
 				self.FatherNode.SubNodeList[self.NodeIndex] = resTmp
-				log.Debug("?????????????", resTmp)
-				log.Debug("?????????????", self.FatherNode)
 			default:
 				newNode := &Dl{
 					NodeName:     self.NodeName,
@@ -57,6 +54,8 @@ func (self *Dl) setExmacro() {
 				newNode.Init()
 				self.FatherNode.SubNodeList[self.NodeIndex] = newNode
 			}
+		} else {
+			panic("")
 		}
 
 		return

@@ -32,8 +32,16 @@ func (self *Dl) setEval() {
 		self.CheckLambdasNameForce("eval")
 		var err error
 		var dataNode *Dl
-		if dataNode, err = self.SubNodeGet("data"); err != nil {
-			panic("'data' not found")
+		if len(self.SubNodeTree) >= 2 {
+			if dataNode, err = self.SubNodeGet("data"); err != nil {
+				panic("'data' not found")
+			}
+		} else if len(self.SubNodeList) == 2 {
+			if dataNode, err = self.SubNodeListGet(1); err != nil {
+				panic("'data' not found")
+			}
+		} else {
+			panic("'eval' format error")
 		}
 		data := GetSliceByte(dataNode)
 

@@ -2,11 +2,19 @@ package dl
 
 import (
 	"errors"
-	"strconv"
 	"encoding/json"
 )
 
-{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "int" "uint" "rune" "byte" "uintptr" "string" "bool"}}
+func (self *Dl) SubNodeCheckKey(key string) (value *Dl, err error) {
+	var ok bool
+	if value, ok = self.SubNodeTree[key]; !ok {
+		err = errors.New("sub node key " + key + " not found")
+		return
+	}
+	return
+}
+
+{{$all_types := MkSlice "int8" "int16" "int32" "int64" "uint8" "uint16" "uint32" "uint64" "float32" "float64" "int" "uint" "rune" "byte" "uintptr" "string" "bool"}}
 {{/* $format_types := MkSlice "single" "slice" "map" */}}
 {{$format_types := MkSlice "single"}}
 {{range $_, $type_base := $all_types}}
@@ -23,15 +31,24 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 		err = errors.New ("get value is nil")
 		return
 	}
-	switch resTmp := resI.(type) {
-	case {{$type_one}}:
-		res = resTmp
-		return
+
+	for {
+		switch resTmp := resI.(type) {
+		case *Dl:
+			value = resTmp
+			resI = value.Call ()
+			continue
+		case {{$type_one}}:
+			res = resTmp
+			return
+		default:
+			break
+		}
+		break
 	}
 
 	var tmpRes {{$type_one}}
-	if err = json.Unmarshal(value.AllStr, &tmpRes); err != nil {
-		err = errors.New (key + " type not {{$type_one}}: " + err.Error ())
+	if err = json.Unmarshal (value.AllStr, &tmpRes); err != nil {
 		return
 	}
 	res = tmpRes
@@ -45,13 +62,29 @@ func (self *Dl) SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverS
 	}
 
 	value := self.SubNodeList[index]
-	if resI := value.Call (); resI == nil {
+	resI := value.Call ()
+	if resI == nil {
 		err = errors.New ("get value is nil")
 		return
 	}
+
+	for {
+		switch resTmp := resI.(type) {
+		case *Dl:
+			value = resTmp
+			resI = value.Call ()
+			continue
+		case {{$type_one}}:
+			res = resTmp
+			return
+		default:
+			break
+		}
+		break
+	}
+
 	var tmpRes {{$type_one}}
-	if err = json.Unmarshal(value.AllStr, &tmpRes); err != nil {
-		err = errors.New (strconv.Itoa (index) + " type not {{$type_one}}: " + err.Error ())
+	if err = json.Unmarshal (value.AllStr, &tmpRes); err != nil {
 		return
 	}
 	res = tmpRes
