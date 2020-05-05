@@ -1,0 +1,21 @@
+[
+	"block",
+	{
+		"name": "macro",
+		"symbol": "m_get",
+		"body": [
+			"cons",
+			["car", ["cdr", ["car", ["get", "reargs"]]]],
+			["quote", {"name": "get"}],
+			"symbol"
+		]
+	},
+	{
+		"name": "remacro",
+		"regexp": "^@(.*)$",
+		"macro": "m_get"
+	},
+
+	["let", "heheda", "uint64", 897],
+	"@heheda"
+]

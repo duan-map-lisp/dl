@@ -1,0 +1,23 @@
+[
+	"block",
+	["eq", "123", "123"],
+	["eq", 123, 123],
+	{
+		"name": "let",
+		"symbol": "heheda",
+		"type": "int",
+		"value": 123
+	},
+	["get", "heheda"],
+	["eq", 123, {
+		"name": "get",
+		"symbol": "heheda"
+	}],
+	{
+		"name": "let",
+		"symbol": "hehe",
+		"type": "int",
+		"value": 123
+	},
+	["eq", ["get", "heheda"], ["get", "hehe"]]
+]

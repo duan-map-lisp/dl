@@ -1,0 +1,5 @@
+{
+	"name": "append",
+	"insert": "1234",
+	"data": ["quote", [1, 2, 3, 4]]
+}

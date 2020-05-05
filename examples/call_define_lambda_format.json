@@ -1,0 +1,43 @@
+[
+	"block",
+	{
+		"name": "let",
+		"symbol": "test_path",
+		"type": "string",
+		"value": "./examples/int.json"
+	},
+	{
+		"name": "let",
+		"symbol": "test_func",
+		"type": "lambda",
+		"value": {
+			"name": "lambda",
+			"args": [
+				"heheda"
+			],
+			"body": [
+				"block",
+				{
+					"name": "eval",
+					"data": {
+						"name": "import",
+						"filepath": {
+							"name": "get",
+							"symbol": "heheda"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"name": "call",
+		"args": {
+			"heheda": "test_path"
+		},
+		"lambda": {
+			"name": "get",
+			"symbol": "test_func"
+		}
+	}
+]

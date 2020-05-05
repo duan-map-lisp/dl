@@ -1,0 +1,11 @@
+[
+	"block",
+	["cdr", ["quote", ["123", 1123, "jfeiow"]]],
+	["cdr",["cdr", ["quote", ["123", 1123, "jfeiow"]]]],
+	["cdr", ["cdr",["cdr", ["quote", ["123", 1123, "jfeiow"]]]]],
+
+	["cdr", ["quote", {
+		"123": "fjeiwo",
+		"jfoiew": "123n2j"
+	}], "123"]
+]

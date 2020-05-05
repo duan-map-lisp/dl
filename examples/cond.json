@@ -1,0 +1,11 @@
+[
+	"cond",
+	["quote", [
+		false,
+		"123"
+	]],
+	["quote", [
+		false,
+		123
+	]]
+]

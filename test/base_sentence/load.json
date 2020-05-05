@@ -1,0 +1,10 @@
+[
+	"block",
+	"list_mode",
+	["load", ["import", "./test/base_sentence/block.json"]],
+	"object_mode",
+	{
+		"name": "load",
+		"data": ["import", "./test/base_sentence/block.json"]
+	}
+]

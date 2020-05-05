@@ -1,0 +1,15 @@
+[
+	"block",
+	["let", "he", "uint64", 12345],
+	["get", "he"],
+	"list_mode",
+	["set", "he", 9],
+	["get", "he"],
+	"object_mode",
+	{
+		"name": "set",
+		"symbol": "he",
+		"value": 99
+	},
+	["get", "he"]
+]

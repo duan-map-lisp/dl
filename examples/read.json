@@ -1,0 +1,17 @@
+{
+	"name": "let",
+	"symbol": "test_map",
+	"type": "list",
+	"value": [
+		"heheda",
+		"fjewiojio",
+		"jfioewjio",
+		123556,
+		{
+			"fjewio": "jfioewjio",
+			"_fjeiow_jfewiojio": "jfeiowjio",
+			"_"  : "jfieojwio",
+			"223": 3345
+		}
+	]
+}

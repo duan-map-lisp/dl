@@ -1,0 +1,28 @@
+[
+	"block",
+	{
+		"name": "let",
+		"symbol": "test_path",
+		"type": "string",
+		"value": "./test/int.json"
+	},
+	{
+		"name": "call",
+		"args": {
+			"filepath": "test_path"
+		},
+		"lambda": {
+			"name": "lambda",
+			"args": [
+				"filepath"
+			],
+			"body": {
+				"name": "import",
+				"filepath": {
+					"name": "get",
+					"symbol": "filepath"
+				}
+			}
+		}
+	}
+]

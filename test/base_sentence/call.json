@@ -1,0 +1,33 @@
+[
+	"block",
+	"list_mode",
+	[
+		"call", {
+			"name": "lambda",
+			"body": ["eval", {
+				"name": "import",
+				"filepath": {
+					"name": "get",
+					"symbol": "heheda"
+				}
+			}]
+		},
+		{
+			"heheda": "./test/base_sentence/hello_world.json"
+		}
+	],
+	"object_mode",
+	{
+		"name": "call",
+		"lambda": {
+			"name": "lambda",
+			"body": [
+				"block",
+				["quote", {
+					"heheda": 123,
+					"jifoew": "jfioew"
+				}]
+			]
+		}
+	}
+]

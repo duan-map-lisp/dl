@@ -1,0 +1,18 @@
+[
+	"block",
+	{
+		"name": "let",
+		"symbol": "heheda",
+		"type": "string",
+		"value": "./test/int.json"
+	},
+	{
+		"name": "lambda",
+		"args": {
+			"filepath": "heheda"
+		},
+		"body": {
+			"name": "import"
+		}
+	}
+]

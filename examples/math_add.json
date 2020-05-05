@@ -1,0 +1,14 @@
+[
+	"block",
+	{
+		"name": "plugin",
+		"filepath": "./lib/std.so"
+	},
+	[
+		"+",
+		6,
+		3,
+		1,
+		7.7
+	]
+]

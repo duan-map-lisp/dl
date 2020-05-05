@@ -1,0 +1,31 @@
+[
+	"block",
+	{
+		"name": "macro",
+		"symbol": "yoo",
+		"body": ["block",
+			{
+				"name": "let",
+				"symbol": "hehe",
+				"type": "list",
+				"value": ["car", ["car", {
+					"name": "get",
+					"symbol": "reargs"
+				}]]
+			},
+			{
+				"name": "exmacro",
+				"lambda": {
+					"name": "macro",
+					"body": ["get", "hehe"]
+				}
+			}
+		]
+	},
+	{
+		"name": "remacro",
+		"regexp": "^:(.*)$",
+		"macro": "yoo"
+	},
+	":heheda"
+]

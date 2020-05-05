@@ -1,0 +1,13 @@
+[
+	{
+		"name": "macro",
+		"symbol": "regexp_let",
+		"body": [
+			"quote",
+			["get", "reargs"]
+		]
+	},
+	{
+		"name": "remacro"
+	}
+]

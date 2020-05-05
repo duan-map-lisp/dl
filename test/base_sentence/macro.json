@@ -1,0 +1,25 @@
+[
+	"block",
+	{
+		"name": "macro",
+		"body": {
+			"name": "import",
+			"filepath": {
+				"name": "get",
+				"symbol": "heheda"
+			}
+		}
+	},
+	{
+		"name": "macro",
+		"symbol": "heheda",
+		"body": {
+			"name": "import",
+			"filepath": {
+				"name": "get",
+				"symbol": "heheda"
+			}
+		}
+	},
+	["get", "heheda"]
+]

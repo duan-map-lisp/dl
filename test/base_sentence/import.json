@@ -1,0 +1,10 @@
+[
+	"block",
+	"list_mode",
+	["import", "./test/base_sentence/block.json"],
+	"object_mode",
+	{
+		"name": "import",
+		"filepath": "./test/base_sentence/block.json"
+	}
+]

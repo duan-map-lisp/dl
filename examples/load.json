@@ -1,0 +1,26 @@
+[
+	"block",
+	{
+		"name": "macro",
+		"symbol": "yoo",
+		"body": {
+			"name": "load",
+			"data": {
+				"name": "import",
+				"filepath": "./examples/defvar_int.json"
+			}
+		}
+	},
+	"middle",
+	{
+		"name": "exmacro",
+		"lambda": {
+			"name": "get",
+			"symbol": "yoo"
+		}
+	},
+	{
+		"name": "get",
+		"symbol": "heheda"
+	}
+]
