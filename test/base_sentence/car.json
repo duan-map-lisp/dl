@@ -1,0 +1,18 @@
+[
+	"block",
+	["car", ["quote", ["jfeiwoj", "jfioewoj"]]],
+	["car", ["quote", {"heheda":"jfioewoj"}], "heheda"],
+	{
+		"name": "car",
+		"data": ["quote", [
+			"jofweio", 12345
+		]]
+	},
+	{
+		"name": "car",
+		"data": ["quote", {
+			"you": 12345
+		}],
+		"key": "you"
+	}
+]

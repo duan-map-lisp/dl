@@ -32,11 +32,7 @@ func (self *Dl) setQuote() {
 			panic("quote format error")
 		}
 
-		if checkQuote(data) {
-			resI = data.Call()
-		} else {
-			resI = data
-		}
+		resI = data
 		return
 	}
 }

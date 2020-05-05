@@ -1,0 +1,23 @@
+[
+	"block",
+	"list_mode",
+	["let", "he", "uint64", 12345],
+	["get", "he"],
+	["let", "hehe", "list", ["quote", [123, "heheda"]]],
+	["get", "hehe"],
+	["let", "hehehe", "object", ["quote", {
+		"yoo":123,
+		"yoooo":"heheda"
+	}]],
+	"object_mode",
+	{
+		"name":"let",
+		"symbol": "heheda",
+		"type": "uint64",
+		"value": 12345
+	},
+	{
+		"name": "get",
+		"symbol": "heheda"
+	}
+]

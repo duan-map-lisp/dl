@@ -1,0 +1,37 @@
+[
+	"block",
+	"begin_define_macro",
+	{
+		"name": "macro",
+		"symbol": "yo",
+		"body": [
+			"block",
+			"begin宏展开期",
+			["get", "reargs"],
+			["car", ["get", "reargs"]],
+			["car", ["car", ["get", "reargs"]]],
+			["cdr", ["car", ["get", "reargs"]]],
+			["car", ["cdr", ["car", ["get", "reargs"]]]],
+			["cons", ["car", ["cdr", ["car", ["get", "reargs"]]]],
+				["quote", {
+					"name": "let",
+					"type": "uint64",
+					"value": 999
+				}],
+				"symbol"
+			]
+		]
+	},
+	"end_define_macro",
+	"begin_define_remacro",
+	{
+		"name": "remacro",
+		"regexp": "^:(.*)$",
+		"macro": "yo"
+	},
+	"end_define_remacro",
+	"begin_exmacro",
+	":heheda",
+	["get", "heheda"],
+	"end_exmacro"
+]

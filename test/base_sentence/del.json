@@ -1,0 +1,8 @@
+[
+	"block",
+	["let", "he", "uint64", 12345],
+	["get", "he"],
+	"list_mode",
+	["del", "he"],
+	["get", "he"]
+]

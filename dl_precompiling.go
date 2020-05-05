@@ -8,12 +8,15 @@ import (
 
 func (self *Dl) Precompiling() {
 	var err error
+	var tmpList []json.RawMessage
+	var tmpMap map[string]json.RawMessage
+
 	// 如果是list
-	if err = json.Unmarshal(self.AllStr, &self.TmpList); err == nil {
-		if len(self.TmpList) < 1 {
+	if err = json.Unmarshal(self.AllStr, &tmpList); err == nil {
+		if len(tmpList) < 1 {
 			return
 		}
-		for tmpNum, tmpOne := range self.TmpList {
+		for tmpNum, tmpOne := range tmpList {
 			data := &Dl{
 				NodeIndex:  tmpNum,
 				FatherNode: self,
@@ -29,12 +32,12 @@ func (self *Dl) Precompiling() {
 	}
 
 	// 如果是map
-	if err = json.Unmarshal(self.AllStr, &self.TmpMap); err == nil {
-		log.Debug("get map", self.TmpMap)
-		if len(self.TmpMap) < 1 {
+	if err = json.Unmarshal(self.AllStr, &tmpMap); err == nil {
+		log.Debug("get map", tmpMap)
+		if len(tmpMap) < 1 {
 			return
 		}
-		for tmpKey, tmpOne := range self.TmpMap {
+		for tmpKey, tmpOne := range tmpMap {
 			log.Debug("tmpKey:", tmpKey)
 			log.Debug("tmpOne", string(tmpOne))
 			data := &Dl{

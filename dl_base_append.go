@@ -1,12 +1,8 @@
 package dl
 
-import (
-	log "github.com/sirupsen/logrus"
-)
-
-func (self *Dl) setCons() {
-	Lambdas["cons"] = func(self *Dl) (resI interface{}) {
-		self.CheckLambdasNameForce("cons")
+func (self *Dl) setAppend() {
+	Lambdas["append"] = func(self *Dl) (resI interface{}) {
+		self.CheckLambdasNameForce("append")
 		var err error
 		var insert *Dl
 		var data *Dl
@@ -27,12 +23,12 @@ func (self *Dl) setCons() {
 				tmpInsert := insert.Call()
 				switch tmpInsertRes := tmpInsert.(type) {
 				case *Dl:
-					tmpRes.SubNodeList = append([]*Dl{tmpInsertRes}, tmpDataList.SubNodeList...)
+					tmpRes.SubNodeList = append(tmpDataList.SubNodeList, tmpInsertRes)
 				default:
-					tmpRes.SubNodeList = append([]*Dl{&Dl{
+					tmpRes.SubNodeList = append(tmpDataList.SubNodeList, &Dl{
 						FatherNode:   self,
 						TmpInterface: tmpInsertRes,
-					}}, tmpDataList.SubNodeList...)
+					})
 				}
 				resI = tmpRes
 				return
@@ -46,16 +42,7 @@ func (self *Dl) setCons() {
 				}
 				tmpRes.Init()
 				tmpRes.SubNodeTree = tmpDataObject.SubNodeTree
-				tmpInsert := insert.Call()
-				switch tmpInsertRes := tmpInsert.(type) {
-				case *Dl:
-					tmpRes.SubNodeTree[key] = tmpInsertRes
-				default:
-					tmpRes.SubNodeTree[key] = &Dl{
-						FatherNode:   self,
-						TmpInterface: tmpInsertRes,
-					}
-				}
+				tmpRes.SubNodeTree[key] = insert
 				resI = tmpRes
 				return
 			}
@@ -75,23 +62,20 @@ func (self *Dl) setCons() {
 				tmpInsert := insert.Call()
 				switch tmpInsertRes := tmpInsert.(type) {
 				case *Dl:
-					tmpRes.SubNodeList = append([]*Dl{tmpInsertRes}, tmpDataList.SubNodeList...)
+					tmpRes.SubNodeList = append(tmpDataList.SubNodeList, tmpInsertRes)
 				default:
-					tmpRes.SubNodeList = append([]*Dl{&Dl{
+					tmpRes.SubNodeList = append(tmpDataList.SubNodeList, &Dl{
 						FatherNode:   self,
 						TmpInterface: tmpInsertRes,
-					}}, tmpDataList.SubNodeList...)
+					})
 				}
 				resI = tmpRes
 				return
 			} else {
-				panic("'cons' format error")
+				panic("'append' format error")
 			}
 		} else if len(self.SubNodeList) == 4 {
-			if insert, err = self.SubNodeListGet(1); err != nil {
-				panic("'insert' not found")
-			}
-			if data, err = self.SubNodeListGet(2); err != nil {
+			if data, err = self.SubNodeListGet(1); err != nil {
 				panic("'data' not found")
 			}
 			if data.CheckType() == "object" || data.CheckType() == "null" {
@@ -104,24 +88,14 @@ func (self *Dl) setCons() {
 				}
 				tmpRes.Init()
 				tmpRes.SubNodeTree = tmpDataObject.SubNodeTree
-				tmpInsert := insert.Call()
-				switch tmpInsertRes := tmpInsert.(type) {
-				case *Dl:
-					tmpRes.SubNodeTree[key] = tmpInsertRes
-				default:
-					tmpRes.SubNodeTree[key] = &Dl{
-						FatherNode:   self,
-						TmpInterface: tmpInsertRes,
-					}
-				}
+				tmpRes.SubNodeTree[key] = insert
 				resI = tmpRes
 				return
 			} else {
-				log.Info(data.String())
-				panic("'cons' format error")
+				panic("'append' format error")
 			}
 		} else {
-			panic("'cons' format error")
+			panic("'append' format error")
 		}
 
 		return

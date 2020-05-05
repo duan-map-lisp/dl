@@ -12,45 +12,15 @@ func (self *Dl) setBlock() {
 			panic("'block' must be list type")
 		}
 		for resIndex, resOne := range self.SubNodeList {
-			var err error
-			var flag string
-			var res *Dl
-
 			if resIndex == 0 {
 				continue
 			}
-			resOneI := resOne.Call()
-
-			switch resTmp := resOneI.(type) {
+			resI = resOne.Call()
+			switch resTmp := resI.(type) {
 			case *Dl:
-				if len(resTmp.SubNodeTree) >= 2 {
-					if flag, err = resTmp.SubNodeGetSingleString("flag"); err != nil {
-						panic("'flag' not found")
-					}
-					if res, err = resTmp.SubNodeGet("res"); err != nil {
-						panic("'res' not found")
-					}
-				} else if len(resTmp.SubNodeList) == 2 {
-					if flag, err = resTmp.SubNodeListGetSingleString(1); err != nil {
-						panic("'flag' not found")
-					}
-					if res, err = resTmp.SubNodeListGet(2); err != nil {
-						panic("'res' not found")
-					}
-				} else {
-					panic("'get' format error")
-				}
+				log.Info("block中间结果：", resTmp.String())
 			default:
-				panic("'block res' format error")
-			}
-
-			resI = res
-			log.Info("block 中间结果：", res.String())
-			if flag == "break" {
-				log.Info("block break")
-				break
-			} else if flag == "continue" {
-				continue
+				log.Info("block中间结果：", resTmp)
 			}
 		}
 		return

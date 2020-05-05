@@ -1,13 +1,18 @@
 [
 	"block",
+	12345,
+	"begin",
 	{
 		"name": "macro",
 		"symbol": "yoo",
 		"body": {
-			"name": "load",
+			"name": "quote",
 			"data": {
-				"name": "import",
-				"filepath": "./test/defvar_int.json"
+				"name": "eval",
+				"data": {
+					"name": "import",
+					"filepath": "./examples/int.json"
+				}
 			}
 		}
 	},
@@ -18,9 +23,5 @@
 			"name": "get",
 			"symbol": "yoo"
 		}
-	},
-	{
-		"name": "get",
-		"symbol": "heheda"
 	}
 ]

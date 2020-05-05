@@ -6,7 +6,7 @@ import (
 
 func (self *Dl) setCall() {
 	Lambdas["call"] = func(self *Dl) (resI interface{}) {
-		log.Debug("in Call", self.TmpInterface)
+		// log.Debug("in Call", self.TmpInterface)
 		self.CheckLambdasNameForce("call")
 		var err error
 		var lambda string
@@ -21,42 +21,36 @@ func (self *Dl) setCall() {
 		} else {
 			panic("'call' format error")
 		}
-
-		var args *Dl
-		lambdaArgsDl := &Dl{
-			FatherNode: self,
-		}
-		lambdaArgsDl.Init()
-		if len(self.SubNodeTree) >= 3 {
-			if args, err = self.SubNodeGet("args"); err != nil {
-				args = nil
-				err = nil
-			}
-		} else if len(self.SubNodeList) >= 3 {
-			args = self
-			err = nil
-		} else {
-			args = nil
-			err = nil
-		}
-
-		if args != nil {
-			log.Debug(args.SubNodeTree)
-			for argsFormal, _ := range args.SubNodeTree {
-				argsSymbol, lambdaErr := args.SubNodeGetSingleString(argsFormal)
-				if lambdaErr != nil {
-					log.Debug(lambdaErr)
-					panic("args type must map[string]string")
-				}
-				resSymbolOne := self.GetSymbol(argsSymbol)
-				lambdaArgsDl.Symbols[argsFormal] = resSymbolOne
-			}
-		}
 		lambdaFunc, ok := Lambdas[lambda]
 		if !ok {
 			panic("lambda '" + lambda + "' not found")
 		}
-		resI = lambdaFunc(lambdaArgsDl)
+
+		// args传入参数，给lambda所在作用域添加symbol参数
+		var args *Dl
+		if len(self.SubNodeTree) >= 3 {
+			if args, err = self.SubNodeGet("args"); err != nil {
+				args = nil
+			}
+		} else if len(self.SubNodeList) == 3 {
+			if args, err = self.SubNodeListGet(2); err != nil {
+				args = nil
+			}
+		} else {
+			args = nil
+		}
+
+		if args != nil {
+			if len(args.SubNodeList) != 0 {
+				panic("call 'args' type must object")
+			}
+			log.Debug(args.SubNodeTree)
+			for argsSymbol, argsValue := range args.SubNodeTree {
+				args.Symbols[argsSymbol] = argsValue.Call()
+			}
+		}
+
+		resI = lambdaFunc(args)
 
 		return
 	}

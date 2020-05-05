@@ -5,22 +5,37 @@ import (
 )
 
 func (self *Dl) Generate() {
-	log.Debug("in Generate ", self.TmpInterface)
+	// log.Debug("in Generate ", self.TmpInterface)
+	if self == nil {
+		return
+	}
 	if self.TmpInterface != nil {
 		return
 	}
-	var err error
+
+	var ok bool
+	var lambdaNameNode *Dl
 	var lambdaName string
-	if lambdaName, err = self.SubNodeGetSingleString("name"); err != nil {
-		if lambdaName, err = self.SubNodeListGetSingleString(0); err != nil {
-			self.GenerateSubNode()
-			return
+	if lambdaNameNode, ok = self.SubNodeTree["name"]; ok {
+		switch tmpRes := lambdaNameNode.TmpInterface.(type) {
+		case string:
+			lambdaName = tmpRes
+		}
+	}
+	if len(self.SubNodeList) > 0 {
+		switch tmpRes := self.SubNodeList[0].TmpInterface.(type) {
+		case string:
+			lambdaName = tmpRes
 		}
 	}
 
+	if lambdaName == "safe" {
+		return
+	}
+
 	if (lambdaName == "macro") || (lambdaName == "exmacro" || (lambdaName == "remacro")) {
+		log.Info("get macro ", lambdaName)
 		GenerateFlag = true
-		log.Debug("macro nodeName ", self.NodeName)
 		_ = self.Call()
 	} else {
 		self.GenerateSubNode()

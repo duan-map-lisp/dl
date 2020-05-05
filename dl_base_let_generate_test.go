@@ -14,14 +14,14 @@ func (self *Dl) setLet() {
 		var err error
 		var symbol string
 		var symbol_type string
-		if len(self.SubNodeTree) >= 3 {
+		if len(self.SubNodeTree) >= 4 {
 			if symbol, err = self.SubNodeGetSingleString("symbol"); err != nil {
 				panic("'symbol' not found")
 			}
 			if symbol_type, err = self.SubNodeGetSingleString("type"); err != nil {
 				panic("'type' not found")
 			}
-		} else if len(self.SubNodeList) == 3 {
+		} else if len(self.SubNodeList) == 4 {
 			if symbol, err = self.SubNodeListGetSingleString(1); err != nil {
 				panic("'symbol' not found")
 			}
@@ -45,8 +45,16 @@ func (self *Dl) setLet() {
 			if _, ok := self.FatherNode.Symbols[symbol]; ok {
 				panic ("redefine val " + symbol)
 			}
-			if self.FatherNode.Symbols[symbol], err = self.SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnakeCaseToPascalCase $type_base}} ("value"); err != nil {
-				panic (err)
+			if len (self.SubNodeTree) >= 4 {
+				if self.FatherNode.Symbols[symbol], err = self.SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnakeCaseToPascalCase $type_base}} ("value"); err != nil {
+					panic (err)
+				}
+			} else if len (self.SubNodeList) == 4 {
+				if self.FatherNode.Symbols[symbol], err = self.SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnakeCaseToPascalCase $type_base}} (3); err != nil {
+					panic (err)
+				}
+			} else {
+				panic("'let' format error")
 			}
 
 			{{end}}
@@ -63,25 +71,54 @@ func (self *Dl) setLet() {
 				panic ("redefine val " + symbol)
 			}
 			var tmpNode *Dl
-			if tmpNode, err = self.SubNodeGet ("value"); err != nil {
-				panic (err)
+			if len (self.SubNodeTree) >= 4 {
+				if tmpNode, err = self.SubNodeGet ("value"); err != nil {
+					panic (err)
+				}
+			} else if len (self.SubNodeList) == 4 {
+				if tmpNode, err = self.SubNodeListGet (3); err != nil {
+					panic (err)
+				}
+			} else {
+				panic("'let' format error")
 			}
-			if len (tmpNode.TmpMap) != 0 {
-				panic ("value not list type")
+			tmpRes := tmpNode.Call ()
+			switch resTmp := tmpRes.(type) {
+			case *Dl:
+				if len (resTmp.SubNodeTree) != 0 {
+					panic ("value not object type")
+				}
+			default:
+				panic ("value not object type")
 			}
-			self.FatherNode.Symbols[symbol] = tmpNode
+			self.FatherNode.Symbols[symbol] = tmpRes
 		case "object":
 			if _, ok := self.FatherNode.Symbols[symbol]; ok {
 				panic ("redefine val " + symbol)
 			}
 			var tmpNode *Dl
-			if tmpNode, err = self.SubNodeGet ("value"); err != nil {
-				panic (err)
+			if len (self.SubNodeTree) >= 4 {
+				if tmpNode, err = self.SubNodeGet ("value"); err != nil {
+					panic (err)
+				}
+			} else if len (self.SubNodeList) == 4 {
+				if tmpNode, err = self.SubNodeListGet (3); err != nil {
+					panic (err)
+				}
+			} else {
+				panic("'let' format error")
 			}
-			if len (tmpNode.TmpList) != 0 {
+
+			tmpRes := tmpNode.Call ()
+			switch resTmp := tmpRes.(type) {
+			case *Dl:
+				if len (resTmp.SubNodeList) != 0 {
+					panic ("value not object type")
+				}
+			default:
 				panic ("value not object type")
 			}
-			self.FatherNode.Symbols[symbol] = tmpNode
+			self.FatherNode.Symbols[symbol] = tmpRes
 
 		default:
 			panic ("error var type " + symbol_type)

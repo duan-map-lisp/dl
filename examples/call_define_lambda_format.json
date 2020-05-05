@@ -4,7 +4,7 @@
 		"name": "let",
 		"symbol": "test_path",
 		"type": "string",
-		"value": "./test/int.json"
+		"value": "./examples/int.json"
 	},
 	{
 		"name": "let",

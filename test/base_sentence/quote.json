@@ -1,0 +1,48 @@
+[
+	"block",
+	"list_mode",
+	["quote", {
+		"fjeiowji": "jfioewj",
+		"jfeiow": 1235
+	}],
+	["quote", ["jfioewj",1235]],
+	["quote", 1235],
+	["quote", "jfioewj"],
+	"object_mode",
+	{
+		"name": "quote",
+		"data": {
+			"fjeiowji": "jfioewj",
+			"jfeiow": 1235
+		}
+	},
+	{
+		"name": "quote",
+		"data": ["jfioewj", 1235]
+	},
+	{
+		"name": "quote",
+		"data": "jfioewj"
+	},
+	{
+		"name": "quote",
+		"data": 1235
+	},
+	{
+		"name": "quote",
+		"data": {
+			"fjeiowji": "jfioewj",
+			"jfeiow": 1235,
+			"heheda": {
+				"test": {
+					"hfhjiowe": 124
+				}
+			}
+		}
+	},
+	["quote", ["fajfeiow", [
+		"jfeowjoio", "heheda", [
+			"123",123
+		]
+	]]]
+]

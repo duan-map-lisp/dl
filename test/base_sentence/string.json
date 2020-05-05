@@ -1,0 +1,14 @@
+[
+	"block",
+	["string", ["quote", {
+		"fjeiowji": "jfioewj",
+		"jfeiow": 1235
+	}]],
+	{
+		"name": "string", 
+		"data": ["quote", {
+			"fjeiowji": "jfioewj",
+			"jfeiow": 1235
+		}]
+	}
+]

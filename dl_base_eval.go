@@ -2,7 +2,7 @@ package dl
 
 import (
 	"encoding/json"
-	// log "github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 func GetSliceByte(dataNode *Dl) (data []byte) {
@@ -53,6 +53,7 @@ func (self *Dl) setEval() {
 
 		// 读取解析所有字符串解析成算法树
 		evalSubNode.Precompiling()
+		log.Info("eval precompiling root：", evalSubNode.String())
 		GenerateFlag = true
 		for {
 			// 如果宏被处理过，再处理一次
@@ -66,9 +67,15 @@ func (self *Dl) setEval() {
 			// 处理正则展开宏
 			evalSubNode.GenerateRegexp()
 		}
+		log.Debug("begin to running...")
+		if evalSubNode != nil {
+			log.Debug("running... ", evalSubNode.String())
+		}
 		// 进入执行其前把预处理期垃圾回收一下
-		evalSubNode.CleanGenerate()
+		log.Info("begin to clean generate...")
+		CleanGenerate(evalSubNode)
 
+		log.Info("eval running root：", evalSubNode.String())
 		resI = evalSubNode.Call()
 
 		return

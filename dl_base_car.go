@@ -1,5 +1,9 @@
 package dl
 
+import (
+	log "github.com/sirupsen/logrus"
+)
+
 func (self *Dl) setCar() {
 	Lambdas["car"] = func(self *Dl) (resI interface{}) {
 		self.CheckLambdasNameForce("car")
@@ -30,12 +34,18 @@ func (self *Dl) setCar() {
 					return
 				}
 				return
+			} else if data.CheckType() == "null" {
+				resI = nil
+				return
 			}
 		} else if len(self.SubNodeList) == 2 {
 			if data, err = self.SubNodeListGet(1); err != nil {
 				panic("'data' not found")
 			}
-			if data.CheckType() == "list" {
+			if data.CheckType() == "list" || data.CheckType() == "null" {
+				log.Info("???", data.String())
+				log.Info("???", data.SubNodeList[0].String())
+
 				tmpDataList := data.Call().(*Dl)
 				if len(tmpDataList.SubNodeList) <= 0 {
 					resI = nil
@@ -49,7 +59,7 @@ func (self *Dl) setCar() {
 			if data, err = self.SubNodeListGet(1); err != nil {
 				panic("'data' not found")
 			}
-			if data.CheckType() == "object" {
+			if data.CheckType() == "object" || data.CheckType() == "null" {
 				if key, err = self.SubNodeListGetSingleString(2); err != nil {
 					panic("'key' not found")
 				}

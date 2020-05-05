@@ -1,0 +1,39 @@
+[
+	"block",
+	"begin_define_macro",
+	{
+		"name": "macro",
+		"symbol": "yo",
+		"body": [
+			"block",
+			"begin宏展开期",
+			["quote", [
+				"block",
+				"begin执行期",
+				["eval", {
+					"name": "import",
+					"filepath": "./test/base_sentence/hello_world.json"
+				}],
+				"end执行期"
+			]]
+		]
+	},
+	"end_define_macro",
+	"begin_exmacro",
+	["exmacro", ["get", "yo"]],
+	"end_exmacro",
+	"begin_exmacro2",
+	{
+		"name": "exmacro",
+		"lambda": {
+			"name": "get",
+			"symbol": "yo"
+		},
+		"args": {
+			"reargs": [
+				"quote", [[":heheda", "heheda"]]
+			]
+		}
+	},
+	"end_exmacro2"
+]

@@ -2,9 +2,14 @@ package dl
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 func AddStringObject(root map[string]interface{}, key string, value *Dl) (res map[string]interface{}) {
+	if value == nil {
+		root[key] = nil
+		return
+	}
 	if len(value.SubNodeTree) > 0 {
 		node := map[string]interface{}{}
 		for nodeKey, nodeValue := range value.SubNodeTree {
@@ -14,7 +19,7 @@ func AddStringObject(root map[string]interface{}, key string, value *Dl) (res ma
 	} else if len(value.SubNodeList) > 0 {
 		node := []interface{}{}
 		for _, value := range value.SubNodeList {
-			AddStringList(node, value)
+			node = AddStringList(node, value)
 		}
 		root[key] = &node
 	} else {
@@ -25,6 +30,10 @@ func AddStringObject(root map[string]interface{}, key string, value *Dl) (res ma
 }
 
 func AddStringList(root []interface{}, value *Dl) (res []interface{}) {
+	if value == nil {
+		root = append(root, nil)
+		return
+	}
 	if len(value.SubNodeTree) > 0 {
 		node := map[string]interface{}{}
 		for nodeKey, nodeValue := range value.SubNodeTree {
@@ -34,7 +43,7 @@ func AddStringList(root []interface{}, value *Dl) (res []interface{}) {
 	} else if len(value.SubNodeList) > 0 {
 		node := []interface{}{}
 		for _, value := range value.SubNodeList {
-			AddStringList(node, value)
+			node = AddStringList(node, value)
 		}
 		root = append(root, &node)
 	} else {
@@ -67,6 +76,37 @@ func (self *Dl) String() (res string) {
 		panic(err)
 	} else {
 		res = string(resByte)
+	}
+	return
+}
+
+func (self *Dl) StringNodeTree() (res string) {
+	if self.NodeName != "" {
+		if self.NodeName == "name" {
+			switch tmpString := self.TmpInterface.(type) {
+			case string:
+				res += "\nGet NodeName 'name'："
+				res += tmpString
+			}
+		}
+		res += "\nNodeName:"
+		res += self.NodeName
+	} else {
+		res += "\nNodeIndex:"
+		res += strconv.Itoa(self.NodeIndex)
+	}
+
+	if self.FatherNode != nil {
+		if self.NodeIndex == 0 {
+			switch tmpString := self.TmpInterface.(type) {
+			case string:
+				res += "\nGet NodeIndex '0'："
+				res += tmpString
+			}
+		}
+		res += self.FatherNode.StringNodeTree()
+	} else {
+		res += "\n"
 	}
 	return
 }

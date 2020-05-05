@@ -32,19 +32,10 @@ func (self *Dl) SubNodeGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverSnake
 		return
 	}
 
-	for {
-		switch resTmp := resI.(type) {
-		case *Dl:
-			value = resTmp
-			resI = value.Call ()
-			continue
-		case {{$type_one}}:
-			res = resTmp
-			return
-		default:
-			break
-		}
-		break
+	switch resTmp := resI.(type) {
+	case {{$type_one}}:
+		res = resTmp
+		return
 	}
 
 	var tmpRes {{$type_one}}
@@ -68,19 +59,10 @@ func (self *Dl) SubNodeListGet{{CoverSnakeCaseToPascalCase $format_one}}{{CoverS
 		return
 	}
 
-	for {
-		switch resTmp := resI.(type) {
-		case *Dl:
-			value = resTmp
-			resI = value.Call ()
-			continue
-		case {{$type_one}}:
-			res = resTmp
-			return
-		default:
-			break
-		}
-		break
+	switch resTmp := resI.(type) {
+	case {{$type_one}}:
+		res = resTmp
+		return
 	}
 
 	var tmpRes {{$type_one}}

@@ -1,0 +1,23 @@
+[
+	"block",
+	{
+		"name": "lambda",
+		"body": {
+			"name": "import",
+			"filepath": {
+				"name": "get",
+				"symbol": "heheda"
+			}
+		}
+	},
+	{
+		"name": "lambda",
+		"body": [
+			"block",
+			["quote", {
+				"heheda": 123,
+				"jifoew": "jfioew"
+			}]
+		]
+	}
+]
