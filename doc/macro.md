@@ -34,7 +34,7 @@ macro定义后需要自我销毁，否则下一轮macro又会被执行。
 	},
 	["get", "heheda"]
 ]
-[code] (../test/base_sentence/macro.json)
+[点击code](../test/base_sentence/macro.json)
 
 2、exmacro
 假设exmacro所在作用域为A域，假设生成macro时所在作用域为B。exmacro宏展开实质上是在调用生成lambda时的状态，假设lambda该作用域为B。
@@ -87,7 +87,7 @@ lisp里有一些缩写，如:aaa, 'bbb, '(123, 345)，之类的。用单引号�
 	["get", "heheda"],
 	"end_exmacro"
 ]
-[code] (../test/base_sentence/remacro.json)
+[点击code](../test/base_sentence/remacro.json)
 
 [
 	"block",
@@ -110,7 +110,7 @@ lisp里有一些缩写，如:aaa, 'bbb, '(123, 345)，之类的。用单引号�
 	["let", "heheda", "uint64", 897],
 	"@heheda"
 ]
-[code] (../test/base_sentence/remacro_get.json)
+[点击code](../test/base_sentence/remacro_get.json)
 这里的"@heheda"会自动展开为["get", "heheda"]
 
 4、safe，保护标记。
