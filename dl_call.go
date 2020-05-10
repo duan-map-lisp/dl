@@ -6,28 +6,27 @@ import (
 
 func (self *Dl) Call() (resI interface{}) {
 	// log.Debug("in Call ", self.TmpInterface)
-	if self == nil {
+	switch tmpType := self.DataInterface.(type) {
+	case map[string]*Dl:
+	case []*Dl:
+	default:
+		resI = tmpType
 		return
 	}
-	if self.TmpInterface != nil {
-		resI = self.TmpInterface
-		return
+
+	name, err := self.GetLambdasName()
+	log.Info("get name is:", name)
+	if err != nil {
+		panic(err)
 	}
-	var err error
+
 	var lambdaName string
-	if len(self.SubNodeTree) >= 1 {
-		if lambdaName, err = self.SubNodeGetSingleString("name"); err != nil {
-			log.Debug(self.String)
-			panic("'name' not found " + err.Error())
-		}
-	} else if len(self.SubNodeList) >= 1 {
-		if lambdaName, err = self.SubNodeListGetSingleString(0); err != nil {
-			log.Debug("......", self.String())
-			panic("'name' not found " + err.Error())
-		}
-	} else {
-		resI = nil
-		return
+	lambdaNameI := self.GetSymbol(name)
+	switch tmpLambdaName := lambdaNameI.(type) {
+	case string:
+		lambdaName = tmpLambdaName
+	default:
+		panic("symbol type not lambda")
 	}
 
 	if lambdaOne, ok := Lambdas[lambdaName]; ok {

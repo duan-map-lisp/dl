@@ -4,33 +4,31 @@ import (
 	"errors"
 )
 
-func (self *Dl) CheckLambdasNameForce(checkName string) {
+func (self *Dl) CheckLambdasName(checkName string) {
 	var err error
-	if err = self.CheckLambdasName(checkName); err != nil {
+	var name string
+	if name, err = self.GetLambdasName(); err != nil {
 		panic(err)
+	}
+	if name != checkName {
+		panic("lambda name not " + checkName)
 	}
 }
 
-func (self *Dl) CheckLambdasName(checkName string) (err error) {
-	var name string
-	if len(self.SubNodeTree) >= 1 {
-		if name, err = self.SubNodeGetSingleString("name"); err != nil {
+func (self *Dl) GetLambdasName() (name string, err error) {
+	switch self.DataInterface.(type) {
+	case map[string]*Dl:
+		if name, err = self.SubNodeGetString("name"); err != nil {
 			err = errors.New("not found lambda name")
 			return
 		}
-	} else if len(self.SubNodeList) >= 1 {
-		if name, err = self.SubNodeListGetSingleString(0); err != nil {
+	case []*Dl:
+		if name, err = self.SubNodeListGetString(0); err != nil {
 			err = errors.New("not found lambda name")
 			return
 		}
-	} else {
+	default:
 		err = errors.New("not found lambda name")
-		return
 	}
-
-	if name != checkName {
-		err = errors.New("lambda name not " + checkName)
-	}
-
 	return
 }

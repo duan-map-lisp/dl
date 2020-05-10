@@ -41,26 +41,24 @@ func main () {
 		panic ("cover eval file error")
 	}
 
-	var test dl.Dl
-	if err = json.Unmarshal (AllStr, &test); err != nil {
-		panic (err)
+	test := &dl.Dl {
+		NodeName: "root",
+		AllStr: AllStr,
 	}
-	(&test).Init ()
-	(&test).SetBaseFunc ()
-	evalFuncSymbol := (&test).GetSymbol ("eval")
-	if evalFuncSymbol == nil {
-		panic ("eval not found")
-	}
-	evalFunc, ok := dl.Lambdas[evalFuncSymbol.(string)]
+	test.Init ()
+	test.SetBaseFunc ()
+	test.Precompiling ()
+	evalFunc, ok := dl.Lambdas["eval"]
 	if !ok {
 		panic ("eval not found")
 	}
-	res := evalFunc (&test)
+	res := evalFunc (test)
 	switch resTmp := res.(type) {
 	case *dl.Dl:
 		fmt.Println ("结果：", resTmp.String ())
 	default:
 		fmt.Println ("结果：", res)
 	}
+
 	return
 }
